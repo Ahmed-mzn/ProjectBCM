@@ -1,0 +1,47 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BCM</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="icon" type="image/png" href="{% static '/images/BCM_Logo.png' %}">
+    <link rel="stylesheet" href="{% static '/css/style.css' %}">
+    <link rel="stylesheet" href="{% static '/fontawesome/css/all.css' %}">
+    <link rel="stylesheet" href="{% static '/css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static '/css/dataTables.bootstrap4.css' %}">
+    <link rel="stylesheet" href="{% static '/css/component-chosen.css' %}">
+    <link rel="stylesheet" href="{% static '/css/jquery-ui.min.css' %}">
+</head>
+<body>
+    {% include 'pages/sidebar.html' %}
+    <!-- Page Content  -->
+    <div id="content" class="p-4 p-md-5 pt-5">
+    {% block content %}
+
+
+    {% endblock %}
+    </div>
+	<script src="{% static '/js/popper.js' %}"></script>
+	<script src="{% static '/js/bootstrap.min.js' %}"></script>
+	<script src="{% static '/js/jquery-3.4.1.min.js' %}"></script>
+	<script src="{% static '/js/jquery.dataTables.js' %}"></script>
+	<script src="{% static '/js/dataTables.bootstrap4.min.js' %}"></script>
+    <script src="{% static '/js/main.js' %}"></script>
+    <script src="{% static '/js/chosen.jquery.min.js' %}"></script>
+	<script src="{% static '/js/jquery-ui.min.js' %}"></script>
+{#	<script src="{% static '/js/jquery-3.4.1.min.js' %}"></script>#}
+    <script type="text/javascript">
+	  $(document).ready(function() {
+	    $('.example').DataTable( {
+	        "language": {
+	        	"url": "{% static '/js/French.json' %}"
+	        },
+            "pageLength": 50
+	    });
+	    $('.form-control-chosen').chosen({no_results_text: "Aucun résultat corespond a "});
+	  });
+	</script>
+</body>
+</html>

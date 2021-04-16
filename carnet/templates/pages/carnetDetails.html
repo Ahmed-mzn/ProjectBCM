@@ -1,0 +1,117 @@
+{% extends 'pages/main.html' %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-md-12 mx-auto">
+            <div class="card" style="box-shadow:0 0 25px 0 #3344b4;">
+                <div class="card-header"><h4>Carnet Détails</h4></div>
+                <div class="card-body">
+                    <table class="table table-hover" style="width: 100%;">
+					  		<tbody>
+							    <tr rowspan='2'>
+							      <th scope="row"><i class="fa fa-wallet"></i> ID Carnet :</th>
+							      <td></td>
+							      <td></td>
+							      <td>{{ carnet.id }}</td>
+							    </tr>
+							    <tr rowspan='2'>
+							      <th scope="row"><i class="fa fa-user-tag"></i>Numero Compte :</th>
+							      <td></td>
+							      <td></td>
+							      <td>{{ carnet.compte.numero }}</td>
+							    </tr>
+							    <tr>
+							    <tr>
+							    <tr rowspan='2'>
+							      <th scope="row"><i class="fa fa-user-tie"></i> Libelle :</th>
+							      <td></td>
+							      <td></td>
+							      <td>{{ carnet.compte.libelle }}</td>
+							    </tr>
+							    <tr rowspan='2'>
+							      <th scope="row"><i class="fa fa-money-check-alt"></i>
+                                      <b>{% if type == "BV" %}Nombre de BV {% else %}Nombre de cheques :{% endif %}</b>
+                                  </th>
+							      <td></td>
+							      <td></td>
+							      <td>{{ nombre_cheques }}</td>
+							    </tr>
+							    <tr rowspan='2'>
+							      <th scope="row"><i class="fa fa-clock"></i><b> Date de creation :</b></th>
+							      <td></td>
+							      <td></td>
+							      <td>{{ carnet.date_Creation }}</td>
+							    </tr>
+							    <tr rowspan='2'>
+							      <th scope="row"><i class="fa fa-user"></i><b> Agent de creation :</b></th>
+							      <td></td>
+							      <td></td>
+							      <td>{{ agent_creation }}</td>
+							    </tr>
+							    <tr rowspan='2'>
+							      <th scope="row"><i class="fa fa-clock"></i><b> Date d'impression :</b></th>
+							      <td></td>
+							      <td></td>
+							      <td>{% if carnet.date_Impression %}{{ carnet.date_Impression }}{% endif %}</td>
+							    </tr>
+							    <tr rowspan='2'>
+							      <th scope="row"><i class="fa fa-user"></i><b> Agent d'impression :</b></th>
+							      <td></td>
+							      <td></td>
+							      <td>{% if agent_emission %}{{ agent_emission }}{% endif %}</td>
+							    </tr>
+							    <tr rowspan='2'>
+							      <th scope="row"><i class="fa fa-clock"></i><b> Date d'emission :</b></th>
+							      <td></td>
+							      <td></td>
+							      <td>{% if carnet.date_Emission %}{{ carnet.date_Emission }}{% endif %}</td>
+							    </tr>
+							    <tr rowspan='2'>
+							      <th scope="row"><i class="fa fa-user"></i><b> Agent d'emission :</b></th>
+							      <td></td>
+							      <td></td>
+							      <td>{% if agent_emission %}{{ agent_emission }}{% endif %}</td>
+							    </tr>
+							    <tr rowspan='2'>
+							      <th scope="row"><i class="fa fa-info-circle"></i><b> Statut :</b></th>
+							      <td></td>
+							      <td></td>
+							      <td>{{ carnet.statut }}</td>
+							    </tr>
+							    <tr rowspan='2'>
+							      <th scope="row"><i class="fa fa-university"></i><b> Numero d'organisation :</b></th>
+							      <td></td>
+							      <td></td>
+							      <td>{% if carnet.compte.numOrganisation %}{{ carnet.compte.numOrganisation }}{% endif %}</td>
+							    </tr>
+					  		</tbody>
+					  	</table>
+                        <div class="row">
+                            <div class="col-md-9 mx-auto">
+                                <div class="card" style="box-shadow:0 0 25px 0 #3344b4;">
+                                    <h5 class="card-header">Liste des cheques de ce carnet</h5>
+                                    <div class="card-body">
+                                        <table class="table table-bordered table-hover example" style="width:100%">
+                                            <thead>
+                                                <th>Numero Cheque</th>
+                                                <th>Statut</th>
+                                            </thead>
+                                            <tbody>
+                                                {% for cheque in cheques %}
+                                                    <tr>
+                                                        <td>{{ cheque.numero }}</td>
+                                                        <td>{{ cheque.statut }}</td>
+                                                    </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                            </div>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

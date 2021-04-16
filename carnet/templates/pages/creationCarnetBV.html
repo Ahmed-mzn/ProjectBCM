@@ -1,0 +1,66 @@
+{% extends 'pages/main.html' %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-md-12 mx-auto">
+            <div class="card" style="box-shadow:0 0 25px 0 #3344b4;">
+                <div class="card-header"><h4>Gestion Carnet BV</h4></div>
+                <div class="card-body">
+                    <ul class="nav nav-tabs">
+						<li class="nav-item">
+							<a class="nav-link" href="{% url 'carnetBV' %}">Les Carnets BV</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link active" href="{% url 'creationCarnetBV' %}">Créer Carnet BV</a>
+						</li>
+					</ul><br>
+                    <div class="row">
+                        <div class="col-md-10 mx-auto">
+                            <div class="card" style="box-shadow:0 0 25px 0 #3344b4;">
+                                <div class="card-header"><h4>Creation Carnet BV</h4></div>
+                                <div class="card-body">
+                                    <form action="" method="POST">
+                                        {% csrf_token %}
+									  <div class="form-row">
+							            <div class="col-md-6">
+							              <label for="inputState">Numero Compte </label>
+							              <select name="numCompte" class="form-control form-control-chosen" id="inputState">
+                                              {% for compte in comptes %}
+											<option value="{{ compte.numero }}">{{ compte.numero }}({{ compte.libelle }})</option>
+                                              {% endfor %}
+							              </select>
+							            </div>
+
+							            <div class="col-md-4">
+							              <label for="inputState">Nombre de cheque </label>
+							              <select name="nombreCheque" id="inputState" class="form-control">
+									    	<option value="25" selected> 25</option>
+									    	<option value="50">50</option>
+							              </select>
+							            </div>
+
+
+									</div>
+
+									  <div class="form-row">
+									  	<input class="d-none" type="text" name="statut" value="Creer">
+									  </div>
+									  <div class="form-row">
+									  	<div class="col"><br>
+									  		<button type="submit" class="btn btn-primary">Creer Carnet</button>
+									  	</div>
+									  </div>
+
+									</div>
+								  </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

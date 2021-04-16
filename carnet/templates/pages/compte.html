@@ -1,0 +1,54 @@
+{% extends 'pages/main.html' %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-md-12 mx-auto">
+            <div class="card" style="box-shadow:0 0 25px 0 #3344b4;">
+                <div class="card-header"><h4>Gestion des comptes</h4></div>
+                <div class="card-body">
+					<ul class="nav nav-tabs">
+						<li class="nav-item">
+							<a class="nav-link active" href="{% url 'compte' %}">Les Comptes</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="{% url 'creationCompte' %}">Créer Compte</a>
+						</li>
+					</ul>
+					<br>
+                    <!-- liste des compte -->
+                    <table id="example" class="table table-bordered table-hover example" style="width:100%">
+                        <thead>
+                            <th>Numero de la compte</th>
+                            <th>Libellle</th>
+                            <th>Numero de l'organisation</th>
+                            <th>Détails</th>
+                        </thead>
+                        <tbody>
+                        {% for compte in comptes %}
+                            <tr>
+
+                                <td>{{ compte.numero }}</td>
+                                <td>{{ compte.libelle }}</td>
+                                <td>{% if compte.numOrganisation %}{{ compte.numOrganisation }}{% endif %}</td>
+                                <td>
+                                    <center>
+                                        <form method="POST" action="" class="form">
+                                            {% csrf_token %}
+                                            <input class="d-none" value="{{ compte.numero }}" name="numCompte">
+                                            <input type="submit" value="Voire Détails" class="btn btn-primary">
+                                        </form>
+                                    </center>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                    <!-- liste des compte -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

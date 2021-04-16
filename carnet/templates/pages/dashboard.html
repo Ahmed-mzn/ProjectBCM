@@ -1,0 +1,46 @@
+{% extends 'pages/main.html' %}
+
+{% block content %}
+
+
+    <div id="content" class="p-4 p-md-5 pt-5">
+        <h2 class="mb-4">Dashboard :</h2>
+        <table class="table table-hover">
+		  <tbody>
+		    <tr rowspan='2'>
+		      <th scope="row">Prenom :</th>
+		      <td></td>
+		      <td></td>
+		      <td>{{ request.user }}</td>
+		    </tr>
+		    <tr>
+		    <tr>
+		    <tr rowspan='2'>
+		      <th scope="row">Nom :</th>
+		      <td></td>
+		      <td></td>
+		      <td>{{ request.user.last_name }}</td>
+		    </tr>
+		    <tr rowspan='2'>
+		      <th scope="row"><small><i class="fa fa-clock"> Last Login :</i></small></th>
+		      <td></td>
+		      <td></td>
+		      <td>{{ request.user.last_login }}</td>
+		    </tr>
+		    <tr rowspan='2'>
+		      <th scope="row"><i class="fa fa-email"> Email :</i></th>
+		      <td></td>
+		      <td></td>
+		      <td>{{ request.user.email }}</td>
+		    </tr>
+		    <tr rowspan='2'>
+		      <th scope="row"> Situation :</th>
+		      <td></td>
+		      <td></td>
+		      <td>{% if request.user.is_staff %}Admin {% else %}Agent{% endif %} </td>
+		    </tr>
+		  </tbody>
+		</table>
+      </div>
+	  </div>
+{% endblock %}

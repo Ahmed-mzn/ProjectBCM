@@ -1,0 +1,42 @@
+ 		<div class="wrapper d-flex align-items-stretch">
+			<nav id="sidebar">
+				<div class="custom-menu">
+					<button type="button" id="sidebarCollapse" class="btn btn-primary">
+	          <i class="fa fa-bars"></i>
+	          <span class="sr-only">Toggle Menu</span>
+	        </button>
+        </div>
+				<div class="p-4">
+		  		<h1><a href="{% url 'dashboard' %}" class="logo">BCM  <span>Carnet Cheque & BV</span></a></h1>
+	        <ul class="list-unstyled components mb-5">
+	          <li {% if active_page == 'dashboard'  %}class="active" {% endif %} >
+	            <a href="{% url 'dashboard' %}"><span class="fa fa-home mr-3"></span> Dashboard</a>
+	          </li>
+	          <li {% if active_page == 'compte'  %}class="active" {% endif %}>
+              	<a href="{% url 'compte' %}"><span class="fa fa-address-card mr-3"></span> Compte</a>
+	          </li>
+{#	          <li {% if active_page == 'carnetCheque'  %}class="active" {% endif %}>#}
+{#	            <a href="{% url 'carnetCheque' %}"><span class="fa fa-wallet mr-3"></span> Carnet Cheque</a>#}
+{#	          </li>#}
+{#	          <li {% if active_page == 'carnetBV'  %}class="active" {% endif %}>#}
+{#              	<a href="{% url 'carnetBV' %}"><span class="fa fa-book mr-3"></span> Carnet BV</a>#}
+{#	          </li>#}
+	          <li>
+              	<a href="{% url 'deconnecter' %}"><span class="fa fa-sign-out-alt mr-3"></span> Deconnecter</a>
+	          </li>
+
+	          <li {% if active_page == 'Vue'  %}class="active" {% endif %}>
+              	<a href="{% url 'accueil' %}"><span class="fa fa-plus mr-3"></span> Vue</a>
+	          </li>
+
+	        </ul>
+
+
+            <div class="footer"><br><br><br><br><br><br><br>
+	        	<p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+						  Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with : Ahmed Zeini
+						  <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+	        </div>
+
+            </div>
+    	</nav>

@@ -1,0 +1,199 @@
+{% extends 'pages/main.html' %}
+
+{% load static %}
+
+{% block content %}
+
+    <div id="app">
+        <h1 v-on:click="showCompteList">Comptes</h1>
+        <transition name="fade">
+            <div id="compte-list" v-if="showPage === 'compte-list'">
+                <table id="example" class="table table-bordered table-striped">
+                    <tr>
+                        <th>Numero</th>
+                        <th>Libelle</th>
+                        <th>Numero d'organisation</th>
+                    </tr>
+                    <tr v-for="compte in comptes">
+                        <td v-on:click="showCompteDetail(compte.numero)"> [[ compte.numero ]]</td>
+                        <td>[[ compte.libelle ]]</td>
+                        <td>[[ compte.numOrganisation ]]</td>
+                    </tr>
+                </table>
+
+                <div id="compte-add-btn" class="text-center">
+                    <a href="#" class="btn btn-primary" v-on:click="showPage = 'compte-form'">
+                        <span class="fa fa-plus"></span>
+                        Ajouter
+                    </a>
+                </div>
+            </div>
+        </transition>
+
+        <transition name="fade">
+
+            <div id="compte-form" style="padding: 20px" v-if="showPage === 'compte-form'">
+                <form action="" v-on:submit.prevent="onSubmit()">
+                    {% csrf_token %}
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="inputState">Type Compte </label>
+                            <select name="type" id="inputState" class="form-control">
+                                <option value="Organisation" selected> Organisation</option>
+                                <option value="Personnel">Personnel</option>
+                            </select>
+                        </div>
+
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="inputEmail4">Numero Du compte</label>
+                            <input type="text" id="input_numero"
+                                   placeholder="Entrer numero compte" class="form-control"
+                                   title="Donner un Numero de 7 chiffres" name="numCompte" v-model="compteInput.numero">
+                            <div class="invalid-feedback">
+                                Numero doit être sur 7 chiffres
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label for="inputEmail4">Libelle</label>
+                            <input type="text" placeholder="Entrer libelle" class="form-control" name="libelle"
+                                   v-model="compteInput.libelle">
+                        </div>
+
+                    </div>
+
+                    <div class="form-row" id="box">
+                        <div class="form-group col-md-6">
+                            <label for="inputPassword4">Numero d'organisation</label>
+                            <input type="text"
+                                   placeholder="Entrer Numero d'organisation"
+                                   id="myInput" title="Donner un Numero de 3 chiffres" class="form-control"
+                                   name="numOrg"
+                                   v-model="compteInput.numOrganisation">
+                        </div>
+
+                    </div>
+                    <div class="form-row">
+                        <button type="submit" id="btn" class="btn btn-primary">Creer Compte</button>
+                        <a class="btn btn-default" v-on:click="showPage = 'compte-list'">
+                            <span class="fa fa-times"></span>
+                            Annuler
+                        </a>
+                    </div>
+
+
+                </form>
+            </div>
+        </transition>
+
+        <transition name="fade">
+            <div v-if="showPage === 'compte-detail'">
+
+
+                <table class="table table-bordered">
+                    <tr>
+                        <th>Numero</th>
+                        <td>[[ compte.numero ]]</td>
+                    </tr>
+                    <tr>
+                        <th>Liblle</th>
+                        <td>[[ compte.libelle ]]</td>
+                    </tr>
+                    <tr>
+                        <th>Numero Organisation</th>
+                        <td>[[ compte.numOrganisation ]]</td>
+                    </tr>
+                </table>
+
+                <div class="row">
+                    <div class="col-sm-3"></div>
+                    <div class="col-sm-6">
+                        <table class="table table-bordered ">
+                            <tr>
+                                <th>statut</th>
+                                <th>date_Creation</th>
+                                <th>agent</th>
+                            </tr>
+                            <tr v-for="carnet in compte.carnet_cheques">
+                                <td>[[ carnet.statut ]]</td>
+                                <td>[[ carnet.date_Creation ]]</td>
+                                <td>[[ carnet.id_agent_Creation ]]</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </transition>
+
+    </div>
+
+    <script src="{% static 'vue/vue.js' %}"></script>
+    <script src="{% static 'vue/vue-resource.js' %}"></script>
+    <script>
+        var app = new Vue({
+            el: '#app',
+            delimiters: ['[[', ']]'],
+            data: {
+                comptes: [],
+                compte: null,
+                showPage: 'compte-list',
+                compteInput: {
+                    "numero": "",
+                    "libelle": "",
+                    "numOrganisation": ""
+                },
+            },
+            mounted: function () {
+                this.getComptes();
+            },
+            methods: {
+                onSubmit() {
+                    this.$http.post('/api/v1/comptes/', body = this.compteInput).then(response => {
+                        this.getComptes();
+                        this.showPage = 'compte-list';
+
+                        this.compteInput = {"numero": "", "libelle": "", "numOrganisation": ""};
+                    }, response => {
+                        // error callback
+                    });
+                },
+                getComptes() {
+                    this.$http.get('/api/v1/comptes/').then(response => {
+                        this.comptes = response.body;
+                    }, response => {
+                        console.log(response)
+                    });
+                },
+                showCompteDetail(numero) {
+                    this.$http.get(`/api/v1/comptes/${numero}/`).then(response => {
+                        this.compte = response.body;
+                        this.showPage = 'compte-detail';
+                    }, response => {
+                        console.log(response)
+                    });
+                },
+                showCompteList() {
+                    this.compte = null;
+                    this.showPage = 'compte-list';
+                }
+
+            }
+        })
+    </script>
+
+    <style>
+
+        .fade-enter-active, .fade-leave-active {
+            transition: opacity 500ms ease;
+        }
+
+        .fade-enter, .fade-leave-to {
+            opacity: 0;
+        }
+
+    </style>
+
+{% endblock %}

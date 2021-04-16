@@ -1,0 +1,51 @@
+{% extends 'pages/main.html' %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-md-12 mx-auto">
+            <div class="card" style="box-shadow:0 0 25px 0 #3344b4;">
+                <div class="card-header"><h4>Gestion Carnet de cheque</h4></div>
+                <div class="card-body">
+                    <ul class="nav nav-tabs">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="{% url 'carnetCheque' %}">Les Carnets de cheque</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'creationCarnet' %}">Créer Carnet de cheques</a>
+                        </li>
+                    </ul><br>
+                    <table class="table table-bordered table-hover example" style="width:100%">
+                        <thead>
+                            <th>id</th>
+                            <th>Statut</th>
+                            <th>Numero Compte</th>
+                            <th>Date de creation</th>
+                            <th>Détails</th>
+                        </thead>
+                        <tbody>
+                        {% for carnet in carnets %}
+                            <tr>
+                                <td>{{ carnet.id }}</td>
+                                <td>{{ carnet.statut }}</td>
+                                <td>{{ carnet.compte }}</td>
+                                <td>{{ carnet.date_Creation }}</td>
+                                <td>
+                                    <center>
+                                        <form method="POST" action="">
+                                            {% csrf_token %}
+                                            <input type="text" name="id_carnet" class="d-none" value="{{ carnet.id }}">
+                                            <input type="submit" value="Voire Détails" class="btn btn-primary">
+                                        </form>
+                                    </center>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

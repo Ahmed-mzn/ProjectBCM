@@ -1,0 +1,20 @@
+
+	<script src="{% static '/js/popper.js' %}"></script>
+	<script src="{% static '/js/bootstrap.min.js' %}"></script>
+	<script src="{% static '/js/jquery-3.4.1.min.js' %}"></script>
+	<script src="{% static '/js/jquery.dataTables.js' %}"></script>
+	<script src="{% static '/js/dataTables.bootstrap4.min.js' %}"></script>
+    <script src="{% static '/js/main.js' %}"></script>
+    <script src="{% static '/js/chosen.jquery.min.js' %}"></script>
+	<script src="{% static '/js/jquery-ui.min.js' %}"></script>
+{#	<script src="{% static '/js/jquery-3.4.1.min.js' %}"></script>#}
+    <script type="text/javascript">
+	  $(document).ready(function() {
+	    $('#example').DataTable( {
+	        "language": {
+	        	"url": "{% static '/js/French.json' %}"
+	        }
+	    });
+	    $('.form-control-chosen').chosen({no_results_text: "Aucun résultat corespond a "});
+	  });
+	</script>

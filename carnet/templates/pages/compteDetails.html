@@ -1,0 +1,133 @@
+{% extends 'pages/main.html' %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-md-12 mx-auto">
+            <div class="row justify-content-start">
+                <div class="col-1.5"><i class="fa fa-user-alt fa-7x"></i></div>
+                <div class="col">
+                    <br><b>Libelle : {{ compte.libelle }}</b><br>
+                    <b>Numero compte : {{ compte.numero }}</b><br>
+                    {% if compte.numOrganisation %}<b>Numero d'organisation : {{ compte.numOrganisation }}</b> {% endif %}
+                </div>
+            </div>
+            <br>
+            <div class="card" style="box-shadow:0 0 25px 0 #3344b4;">
+                <div class="card-header"><h4>Carnet de cheques</h4></div>
+                <div class="card-body">
+                    <table class="table table-bordered table-hover example" style="width:100%">
+                        <thead>
+                            <th>id</th>
+                            <th>Statut</th>
+                            <th>Numero Compte</th>
+                            <th>Date de creation</th>
+                            <th>Détails</th>
+                        </thead>
+                        <tbody>
+                        {% for carnet in carnets %}
+                            <tr>
+                                <td>{{ carnet.id }}</td>
+                                <td>{{ carnet.statut }}</td>
+                                <td>{{ compte.numero }}</td>
+                                <td>{{ carnet.date_Creation }}</td>
+                                <td>
+                                    <center>
+                                        <form method="POST" action="{% url 'compteDetails' %}">
+                                            {% csrf_token %}
+                                            <input type="text" name="id_carnet" class="d-none" value="{{ carnet.id }}">
+                                            <input type="text" name="type" class="d-none" value="carnet">
+                                            <input type="submit" value="Voire Détails" class="btn btn-primary">
+                                        </form>
+                                    </center>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table><br>
+                    <hr color="lightblue">
+                    <h3>Creer Carnet Cheque</h3>
+                    <hr color="lightblue" width="29%" align="left">
+                    <form method="POST" action="{% url 'creationCarnet' %}">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-md-5">
+                                <label for="inputState">Nombre de cheque </label>
+                                <select name="nombreCheque" id="inputState" class="form-control">
+                                    <option value="25" selected> 25</option>
+                                    <option value="50">50</option>
+                                </select>
+                            </div>
+                            <div class="col-md-5">
+                                <br>
+                                <input class="d-none" name="numCompte" value="{{ compte.numero }}">
+                                <input type="submit" id="creer" value="Crer Carnet de Cheque" class="btn btn-primary btn-lg btn-block">
+                            </div>
+                        </div>
+                    </form>
+                    <hr color="lightblue">
+                </div>
+            </div>
+        </div>
+    </div><br><br><br>
+    {% if compte.numOrganisation %}
+    <div class="row">
+        <div class="col-md-12 mx-auto">
+            <div class="card" style="box-shadow:0 0 25px 0 #3344b4;">
+                <h4 class="card-header">Carnet de BV</h4>
+                <div class="card-body">
+                    <table class="table table-bordered table-hover example" style="width:100%">
+                        <thead>
+                            <th>id</th>
+                            <th>Statut</th>
+                            <th>Numero Compte</th>
+                            <th>Date de creation</th>
+                            <th>Détails</th>
+                        </thead>
+                        <tbody>
+                        {% for carnet in carnetBV %}
+                            <tr>
+                                <td>{{ carnet.id }}</td>
+                                <td>{{ carnet.statut }}</td>
+                                <td>{{ carnet.compte.numero }}</td>
+                                <td>{{ carnet.date_Creation }}</td>
+                                <td>
+                                    <center>
+                                        <form method="POST" action="{% url 'compteDetails' %}">
+                                            {% csrf_token %}
+                                            <input type="text" name="id_carnet" class="d-none" value="{{ carnet.id }}">
+                                            <input type="text" name="type" class="d-none" value="BV">
+                                            <input type="submit" value="Voire Détails" class="btn btn-primary">
+                                        </form>
+                                    </center>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                    <hr color="lightblue">
+                    <h3>Creer Carnet Bv</h3>
+                    <hr color="lightblue" width="29%" align="left">
+                    <form method="POST" action="{% url 'creationCarnetBV' %}">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-md-5">
+                                <label for="inputState">Nombre de cheque </label>
+                                <select name="nombreCheque" id="inputState" class="form-control">
+                                    <option value="25" selected> 25</option>
+                                    <option value="50">50</option>
+                                </select>
+                            </div>
+                            <div class="col-md-5">
+                                <br><input type="number" class="d-none" name="numCompte" value="{{ compte.numero }}">
+                                <input type="submit" id="creer" value="Crer Carnet BV" class="btn btn-primary btn-lg btn-block">
+                            </div>
+                        </div>
+                    </form>
+                    <hr color="lightblue">
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+{% endblock %}

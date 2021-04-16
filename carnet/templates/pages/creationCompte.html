@@ -1,0 +1,130 @@
+{% extends 'pages/main.html' %}
+
+{% block content %}
+
+       <div class="row">
+        <div class="col-md-12 mx-auto">
+            <div class="card" style="box-shadow:0 0 25px 0 #3344b4;">
+                <div class="card-header"><h4>Gestion des comptes</h4></div>
+                <div class="card-body">
+					<ul class="nav nav-tabs">
+						<li class="nav-item">
+							<a class="nav-link" href="{% url 'compte' %}">Les Comptes</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link active" href="{% url 'creationCompte' %}">Créer Compte</a>
+						</li>
+					</ul>
+					<br>
+                    <!-- Form Creation d'une compte -->
+                    <div class="row">
+                        <div class="col-md-10 mx-auto">
+                            <div class="card" style="box-shadow:0 0 25px 0 #3344b4;">
+                                <div class="card-header"><h5>Craetion Compte</h5></div>
+                                <div class="card-body">
+                                    <form action="" method="POST">
+                                        {% csrf_token %}
+                                      <div class="form-row">
+                                      <div class="form-group col-md-6">
+                                            <label for="inputState">Type Compte </label>
+                                            <select name="type" id="inputState" class="form-control">
+                                                <option value="Organisation" selected> Organisation</option>
+                                                <option value="Personnel">Personnel</option>
+                                            </select>
+                                      </div>
+
+                                      </div>
+                                      <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                          <label for="inputEmail4">Numero Du compte</label>
+                                          <input type="text" onkeypress="return myFunction2()" id="input_numero" placeholder="Entrer numero compte" class="form-control" title="Donner un Numero de 7 chiffres" name="numCompte" required>
+                                           <div class="invalid-feedback">
+                                                Numero doit être sur 7 chiffres
+                                           </div>
+                                        </div>
+
+                                        <div class="form-group col-md-6">
+                                          <label for="inputEmail4">Libelle</label>
+                                          <input type="text" placeholder="Entrer libelle" class="form-control" name="libelle" required>
+                                        </div>
+
+                                      </div>
+
+                                      <div class="form-row" id="box">
+                                        <div class="form-group col-md-6">
+                                          <label for="inputPassword4">Numero d'organisation</label>
+                                          <input type="text" onkeypress="return myFunction()" placeholder="Entrer Numero d'organisation" id="myInput" title="Donner un Numero de 3 chiffres" class="form-control" name="numOrg" required>
+                                        </div>
+
+
+                                      </div>
+                                      <div class="form-row">
+                                        <button type="submit" id="btn" class="btn btn-primary">Creer Compte</button>
+                                      </div>
+
+
+								</form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Form Creation d'une compte -->
+                </div>
+            </div>
+        </div>
+    </div>
+<script>
+
+    var slt=document.getElementById('inputState'),
+        box=document.getElementById('box'),
+        input=document.getElementById('myInput'),
+        input_numero=document.getElementById('input_numero'),
+        btn=document.getElementById("btn");
+
+        slt.onchange=function display(){
+            if(slt.value=='Organisation'){
+                box.classList.remove("d-none");
+                input.value="";
+                input.setAttribute("required","");
+            }
+
+            if(slt.value=='Personnel'){
+                box.classList.add('d-none');
+                input.value="";
+                input.removeAttribute("required");
+            }
+        }
+
+        input.addEventListener("keyup",function(){
+            var ExReg=/[^0-9]/g;
+            input.value=input.value.replace(ExReg,"");
+        });
+
+        input_numero.addEventListener("keyup",function(){
+            var ExReg=/[^0-9]/g;
+            input_numero.value=input_numero.value.replace(ExReg,"");
+            if(input_numero.value.length<7){
+                input_numero.classList.add("is-invalid");
+                btn.setAttribute("disabled","");
+            }
+            else{
+                input_numero.classList.remove("is-invalid");
+                btn.removeAttribute("disabled");
+            }
+
+        });
+
+
+        function myFunction(){
+            if(input.value.length>=3){
+                return false;
+            }
+        }
+        function myFunction2(){
+            if(input_numero.value.length>=7){
+                return false;
+            }
+        }
+
+</script>
+{% endblock %}

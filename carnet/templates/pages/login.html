@@ -1,0 +1,63 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Login</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+    <link rel="icon" type="image/png" href="{% static '/images/BCM_Logo.png' %}">
+    <link rel="stylesheet" href="{% static '/css/style.css' %}">
+    <link rel="stylesheet" href="{% static '/fontawesome/css/all.css' %}">
+    <link rel="stylesheet" href="{% static '/css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static '/css/dataTables.bootstrap4.css' %}">
+    <link rel="stylesheet" href="{% static '/css/component-chosen.css' %}">
+    <link rel="stylesheet" href="{% static '/css/jquery-ui.min.css' %}">
+    <link rel="stylesheet" href="{% static '/css/login.css' %}">
+</head>
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+        <div class="card card-signin my-5">
+          <div class="card-body">
+          	<img src="{% static '/images/BCM_Logo.png' %}" class="img-fluid" alt="Responsive image">
+          	<hr class="my-4">
+            <h5 class="card-title text-center">Se Connecter</h5>
+            <form class="form-signin" method="POST" action="">
+                {% csrf_token %}
+                {% for message in messages %}
+                    <h5 style="color: red"><small><b>{{ message }} :</b></small></h5>
+                {% endfor %}
+              <div class="form-label-group">
+                <input type="text" id="inputNom" class="form-control" name="username" placeholder="Nom de l'agent" required autofocus>
+                <label for="inputNom">Nom de l'agent</label>
+              </div>
+
+              <div class="form-label-group">
+                <input type="password" id="inputPassword" class="form-control" name="password" placeholder="Password" required>
+                <label for="inputPassword">Password</label>
+              </div>
+              <br>
+              <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Connecter</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+	<script src="{% static '/js/popper.js' %}"></script>
+	<script src="{% static '/js/bootstrap.min.js' %}"></script>
+	<script src="{% static '/js/jquery-3.4.1.min.js' %}"></script>
+	<script src="{% static '/js/jquery.dataTables.js' %}"></script>
+	<script src="{% static '/js/dataTables.bootstrap4.min.js' %}"></script>
+    <script src="{% static '/js/main.js' %}"></script>
+    <script src="{% static '/js/chosen.jquery.min.js' %}"></script>
+	<script src="{% static '/js/jquery-ui.min.js' %}"></script>
+	<script src="{% static '/js/jquery-3.4.1.min.js' %}"></script>
+
+</body>
+</html>
